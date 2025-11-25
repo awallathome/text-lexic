@@ -27,8 +27,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Trim the API key to remove any whitespace or newlines
+    const apiKey = process.env.OPENAI_API_KEY.trim();
+
     const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: apiKey,
     });
 
     // Construct the prompt with user descriptions and text
