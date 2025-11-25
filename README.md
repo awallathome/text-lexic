@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Text-Lexic
 
-## Getting Started
+A web application designed to make text easier to read for people with dyslexic characteristics.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Personalized Reading Profiles**: Select from 4 classic descriptions of dyslexia or add your own custom description
+- **Text Formatting**: Paste any text and receive a version formatted specifically for your reading needs
+- **AI-Powered**: Uses OpenAI's prompt API to intelligently format text based on your preferences
+- **Clean, Accessible UI**: Modern, user-friendly interface built with Next.js and Tailwind CSS
+
+## Setup
+
+### Prerequisites
+
+- Node.js 18+ installed
+- An OpenAI API key
+
+### Installation
+
+1. Clone this repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env.local` file in the root directory and add your OpenAI API key:
+   ```
+   OPENAI_API_KEY=your_openai_api_key_here
+   ```
+
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## Usage
+
+1. **Step 1**: Select any of the 4 classic dyslexia descriptions that match your reading experience, or add your own custom description
+2. **Step 2**: Paste the text you want to make more readable
+3. Click "Make Text Readable" to receive your formatted text
+4. Copy the formatted text or format another piece of text
+
+## API
+
+The application sends a JSON payload to the OpenAI API in this format:
+
+```json
+{
+  "descriptions": ["array of selected/custom descriptions"],
+  "text": "the text to format"
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The API returns formatted text that's optimized for the specified reading characteristics.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technologies
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js 16**: React framework with App Router
+- **TypeScript**: Type-safe development
+- **Tailwind CSS**: Utility-first styling
+- **OpenAI API**: AI-powered text formatting
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
