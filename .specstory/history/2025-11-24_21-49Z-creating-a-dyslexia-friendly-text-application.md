@@ -2862,3 +2862,134 @@ After redeploying, your application should work correctly. Let me know if you ne
 
 ---
 
+_**User (2025-11-25 11:42Z)**_
+
+running the application in localhost works fine. But running it in vercel is giving this error: 401 Incorrect API key provided: OPENAI_A***********************************************************************************************************************************************************************WuQA. You can find your API key at https://platform.openai.com/account/api-keys.
+
+
+
+---
+
+_**Agent (model claude-4.5-sonnet-thinking, mode Agent)**_
+
+<think><details><summary>Thought Process</summary>
+The error shows that the API key being used in Vercel is extremely long (look at all those asterisks), which suggests it might have extra characters, newlines, or some formatting issue. The API key in Vercel might have been copy-pasted with extra whitespace or something similar.
+
+Let me help the user fix this by:
+1. Updating the API route to trim the API key before using it
+2. Advising them to re-enter the key in Vercel settings
+
+The key looks way too long based on the asterisks shown, so there's definitely some extra content in there.</details></think>
+
+---
+
+The error shows the API key is extremely long (notice all those asterisks), which means there's likely extra whitespace, newlines, or other characters in the environment variable in Vercel. Let me fix this:
+
+## Fix 1: Update the code to trim the API key
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **code_edit** • Edit file: /Users/adamwallis/Overclock-Code/text-lexic/app/api/format-text/route.ts</summary>
+
+**Chunk 1**
+Lines added: 4, lines removed: 1
+
+```diff
+@@ -27,7 +27,10 @@
+        );
+      }
++ 
++     // Trim the API key to remove any whitespace or newlines
++     const apiKey = process.env.OPENAI_API_KEY.trim();
+  
+      const openai = new OpenAI({
+-       apiKey: process.env.OPENAI_API_KEY,
++       apiKey: apiKey,
+      });
+  
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+Good, I've added the trim() to clean up any whitespace. Now let me commit and push this fix.</details></think>
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="read_lints">
+<details>
+          <summary>Tool use: **read_lints** • Read lints for 1 file</summary>
+      
+Lint paths:
+
+- `/Users/adamwallis/Overclock-Code/text-lexic/app/api/format-text/route.ts`
+
+Lint results
+
+
+**No lint errors found**
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+Good, no linter errors. Now I need to commit and push this change, and also give the user instructions on how to fix the Vercel environment variable.</details></think>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_cmd">
+<details><summary>Tool use: **command** • Run command: cd /Users/adamwallis/Overclock-Code/text-lexic && git add -A && git commit -m "Fix: Trim API key to remove whitespace/newlines" && git push</summary>
+
+```bash
+cd /Users/adamwallis/Overclock-Code/text-lexic && git add -A && git commit -m "Fix: Trim API key to remove whitespace/newlines" && git push
+```
+
+```
+[main 37f73f3] Fix: Trim API key to remove whitespace/newlines
+ 2 files changed, 185 insertions(+), 1 deletion(-)
+To https://github.com/awallathome/text-lexic.git
+   21139be..37f73f3  main -&gt; main
+
+```
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+Good, the code is pushed. Now I need to give the user clear instructions on what to do next.</details></think>
+
+---
+
+Perfect! I've pushed a fix that trims the API key. Now you need to fix the environment variable in Vercel:
+
+## Steps to Fix in Vercel:
+
+1. **Go to Vercel Dashboard** → Your `text-lexic` project → **Settings** → **Environment Variables**
+
+2. **Delete the existing `OPENAI_API_KEY`** variable (click the three dots → Delete)
+
+3. **Add it again with these precautions:**
+   - Copy your API key from OpenAI
+   - Paste it into a plain text editor first to verify it's clean
+   - Make sure it starts with `sk-proj-` or `sk-` and has no extra spaces or newlines
+   - Copy the clean key and paste it into Vercel
+   - Select all environments (Production, Preview, Development)
+
+4. **Redeploy:**
+   - The push I just made will trigger an automatic deployment, OR
+   - Go to **Deployments** tab → Click the three dots on latest deployment → **Redeploy**
+
+The code now trims the API key automatically, so even if there's trailing whitespace, it should work. But it's best to ensure the key is clean in Vercel's settings.
+
+Let me know once you've updated the environment variable and redeployed!
+
+---
+
