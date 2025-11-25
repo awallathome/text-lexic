@@ -50,7 +50,13 @@ ${text}
 
 IMPORTANT: Structure your response in TWO parts separated by the marker "---FORMATTED_TEXT---":
 
-1. FIRST, provide a brief explanation (2-4 bullet points) of the formatting decisions you made and why they help with the specific challenges mentioned. Use plain HTML formatting for this section.
+1. FIRST, provide a brief explanation (3-5 bullet points) of the formatting decisions you made. For EACH decision, explicitly reference which of the user's specific reading challenges you're addressing and explain how your formatting choice helps. Use plain HTML formatting for this section (use <ul> and <li> tags for bullet points).
+
+Example format:
+<ul>
+<li><strong>For "letters seem to move or blur":</strong> I increased line spacing and added extra padding to reduce visual crowding...</li>
+<li><strong>For "lose my place frequently":</strong> I broke the text into shorter paragraphs with clear breaks...</li>
+</ul>
 
 2. THEN, after the marker "---FORMATTED_TEXT---", provide the reformatted text with HTML formatting.
 

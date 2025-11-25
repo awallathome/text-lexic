@@ -199,8 +199,9 @@ export default function Home() {
             </button>
           </form>
         ) : (
-          <div className="bg-white rounded-2xl shadow-xl p-8 space-y-6">
-            <div className="flex items-center justify-between mb-6">
+          <div className="space-y-6">
+            {/* Header with reset button */}
+            <div className="flex items-center justify-between bg-white rounded-2xl shadow-xl p-6">
               <h2 className="text-2xl font-semibold text-gray-900">
                 Your Readable Text
               </h2>
@@ -212,35 +213,68 @@ export default function Home() {
               </button>
             </div>
 
-            {explanation && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-blue-900 mb-3">
-                  Formatting Decisions
-                </h3>
-                <div 
-                  className="text-blue-800"
-                  dangerouslySetInnerHTML={{ __html: explanation }}
-                />
-              </div>
-            )}
-            
-            <div className="prose max-w-none">
-              <div 
-                className="p-6 bg-gray-50 rounded-lg border border-gray-200 whitespace-pre-wrap"
-                dangerouslySetInnerHTML={{ __html: formattedText }}
-              />
-            </div>
+            {/* Split layout: descriptions + formatting decisions on left, formatted text on right */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Left side - User's descriptions and formatting decisions (takes 1 column on large screens) */}
+              <div className="lg:col-span-1 space-y-6">
+                <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                    Your Reading Preferences
+                  </h3>
+                  <ul className="space-y-3">
+                    {selectedDescriptions.map((desc, index) => (
+                      <li key={index} className="flex items-start">
+                        <svg className="w-5 h-5 text-indigo-600 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-gray-700 text-sm">{desc}</span>
+                      </li>
+                    ))}
+                    {customDescription && (
+                      <li className="flex items-start">
+                        <svg className="w-5 h-5 text-indigo-600 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-gray-700 text-sm">{customDescription}</span>
+                      </li>
+                    )}
+                  </ul>
 
-            <div className="pt-4 border-t">
-              <button
-                onClick={() => {
-                  const textContent = new DOMParser().parseFromString(formattedText, 'text/html').body.textContent || '';
-                  navigator.clipboard.writeText(textContent);
-                }}
-                className="bg-indigo-600 text-white py-2 px-6 rounded-lg font-medium hover:bg-indigo-700 transition-all"
-              >
-                Copy to Clipboard
-              </button>
+                  {explanation && (
+                    <div className="mt-6 pt-6 border-t border-gray-200">
+                      <h4 className="text-md font-semibold text-gray-900 mb-3">
+                        Formatting Decisions
+                      </h4>
+                      <div 
+                        className="text-gray-700 text-sm"
+                        dangerouslySetInnerHTML={{ __html: explanation }}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Right side - Formatted text (takes 2 columns on large screens) */}
+              <div className="lg:col-span-2 space-y-6">
+                <div className="bg-white rounded-2xl shadow-xl p-8">
+                  <div 
+                    className="whitespace-pre-wrap text-black"
+                    dangerouslySetInnerHTML={{ __html: formattedText }}
+                  />
+                </div>
+
+                <div className="bg-white rounded-2xl shadow-xl p-6">
+                  <button
+                    onClick={() => {
+                      const textContent = new DOMParser().parseFromString(formattedText, 'text/html').body.textContent || '';
+                      navigator.clipboard.writeText(textContent);
+                    }}
+                    className="w-full sm:w-auto bg-indigo-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-indigo-700 transition-all"
+                  >
+                    Copy to Clipboard
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}
